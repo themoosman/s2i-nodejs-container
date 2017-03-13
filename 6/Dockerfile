@@ -1,4 +1,4 @@
-FROM rhscl/s2i-base-rhel7
+FROM FROM registry.access.redhat.com/rhscl/s2i-base-rhel7
 
 # This image provides a Node.JS environment you can use to run your Node.JS
 # applications.
