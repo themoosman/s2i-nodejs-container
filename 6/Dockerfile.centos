@@ -1,7 +1,9 @@
-FROM rhscl/s2i-base-rhel7
+FROM centos/s2i-base-centos7
 
 # This image provides a Node.JS environment you can use to run your Node.JS
 # applications.
+
+MAINTAINER SoftwareCollections.org <sclorg@redhat.com>
 
 EXPOSE 8080
 
@@ -24,31 +26,10 @@ LABEL summary="Platform for building and running Node.js 6 applications" \
       com.redhat.deployments-dir="/opt/app-root/src" \
       com.redhat.dev-mode.port="DEBUG_PORT:5858"
 
-# Labels consumed by Red Hat build service
-LABEL com.redhat.component="nodejs6" \
-      name="rhscl/nodejs-6-rhel7" \
-      version="6.x" \
-      release="1" \
-      architecture="x86_64"
-
-# To use subscription inside container yum command has to be run first (before yum-config-manager)
-# https://access.redhat.com/solutions/1443553
-RUN yum repolist > /dev/null && \
-    yum-config-manager --enable rhel-server-rhscl-7-rpms && \
-    yum-config-manager --enable rhel-7-server-optional-rpms && \
-    yum-config-manager --enable rhel-7-server-extras-rpms && \
-    yum-config-manager --enable rhel-7-server-ose-3.3-rpms && \
-    yum-config-manager --disable epel >/dev/null || : && \
-    INSTALL_PKGS="bzip2 nss_wrapper" && \
+RUN yum install -y epel-release && \
+    INSTALL_PKGS="nodejs" && \
     yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
-    rpm -V $INSTALL_PKGS && \
-    ##Use these commands to install the latest version of Nodejs 6
-    #curl --silent --location https://rpm.nodesource.com/setup_6.x | bash - && \
-    #yum -y install nodejs npm gcc-c++ make
-    ##Use this commands to install a specific version of Nodejs
-    yum install -y --setopt=tsflags=nodocs https://rpm.nodesource.com/pub_6.x/el/7/x86_64/nodejs-6.1.0-1nodesource.el7.centos.x86_64.rpm && \
     yum clean all -y
-
 
 # Copy the S2I scripts from the specific language image to $STI_SCRIPTS_PATH
 COPY ./s2i/bin/ $STI_SCRIPTS_PATH
