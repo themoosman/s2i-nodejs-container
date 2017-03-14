@@ -49,8 +49,6 @@ RUN yum repolist > /dev/null && \
     ##yum install -y --setopt=tsflags=nodocs https://rpm.nodesource.com/pub_6.x/el/7/x86_64/nodejs-6.9.1-1nodesource.el7.centos.x86_64.rpm && \
     yum clean all -y
 
-#RUN npm install -g react-native-cli
-
 # Copy the S2I scripts from the specific language image to $STI_SCRIPTS_PATH
 COPY ./s2i/bin/ $STI_SCRIPTS_PATH
 
