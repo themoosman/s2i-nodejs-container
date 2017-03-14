@@ -43,10 +43,10 @@ RUN yum repolist > /dev/null && \
     yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
     ##Use these commands to install the latest version of Nodejs 6
-    #curl --silent --location https://rpm.nodesource.com/setup_6.x | bash - && \
-    #yum -y install nodejs npm gcc-c++ make
+    curl --silent --location https://rpm.nodesource.com/setup_6.x | bash - && \
+    yum -y install nodejs npm gcc-c++ make
     ##Use this commands to install a specific version of Nodejs
-    yum install -y --setopt=tsflags=nodocs https://rpm.nodesource.com/pub_6.x/el/7/x86_64/nodejs-6.9.1-1nodesource.el7.centos.x86_64.rpm && \
+    ##yum install -y --setopt=tsflags=nodocs https://rpm.nodesource.com/pub_6.x/el/7/x86_64/nodejs-6.9.1-1nodesource.el7.centos.x86_64.rpm && \
     yum clean all -y
 
 #RUN npm install -g react-native-cli
